@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8080/api/posts";
+const API_BASE = "postgresql://facebook_db_user:cp3fnN6pPVie2wAmAq12MPras3JzSsT7@dpg-d44mjc7gi27c73ad3dcg-a/facebook_db";
 
 export async function getPosts() {
   const res = await fetch(API_BASE);
