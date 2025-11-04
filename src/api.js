@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8080/api/posts";
+const API_BASE = "https://facebookapi-backend.onrender.com/api/posts";
 
 export async function getPosts() {
   const res = await fetch(API_BASE);
