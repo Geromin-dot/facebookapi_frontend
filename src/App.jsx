@@ -39,7 +39,7 @@ export default function App() {
 
   async function handleSaveEdit(updatedPost) {
     try {
-      await fetch(`http://localhost:8080/api/posts/${updatedPost.id}`, {
+      await fetch(`https://facebookapi-frontend.onrender.com//api/posts/${updatedPost.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedPost),
