@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { getPosts, deletePost, updatePost } from "../api";
+import React, { useState } from "react";
+// Removed unnecessary imports: getPosts, deletePost, updatePost
 
 function PostItem({ post, onEdit, onDelete }) {
   return (
@@ -39,47 +39,65 @@ function PostItem({ post, onEdit, onDelete }) {
   );
 }
 
-export default function PostList() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [editing, setEditing] = useState(null);
+// PostList now accepts data and handlers as props
+export default function PostList({ posts, loading, error, handleDelete, handleSave }) {
+  const [editing, setEditing] = useState(null); // Local state for controlling the modal
 
-  async function load() {
-    setLoading(true);
-    try {
-      const data = await getPosts();
-      data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setPosts(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  function EditModal({ post, onCancel, onSave }) {
+    const [author, setAuthor] = useState(post.author);
+    const [content, setContent] = useState(post.content);
+    const [imageUrl, setImageUrl] = useState(post.imageUrl || "");
+    const [saving, setSaving] = useState(false);
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      setSaving(true);
+      // Calls handleSave from App.jsx
+      await onSave({ ...post, author, content, imageUrl: imageUrl || null }); 
+      setSaving(false);
+      setEditing(null); // Close modal
     }
-  }
 
-  useEffect(() => {
-    load();
-  }, []);
+    return (
+      <div className="modal-backdrop">
+        <form className="modal card" onSubmit={handleSubmit}>
+          <h3>Edit post</h3>
 
-  async function handleDelete(id) {
-    if (!confirm("Delete this post?")) return;
-    try {
-      await deletePost(id);
-      await load();
-    } catch (err) {
-      alert("Delete failed: " + err.message);
-    }
-  }
+          <label>
+            Author
+            <input
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
+          </label>
 
-  async function handleSave(updated) {
-    try {
-      await updatePost(updated.id, updated);
-      await load();
-      setEditing(null);
-    } catch (err) {
-      alert("Update failed: " + err.message);
-    }
+          <label>
+            Content
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </label>
+
+          <label>
+            Image URL
+            <input
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+            />
+          </label>
+
+          <div className="actions">
+            <button type="button" onClick={onCancel} disabled={saving}>
+              Cancel
+            </button>
+            <button type="submit" disabled={saving}>
+              {saving ? "Saving..." : "Save"}
+            </button>
+          </div>
+        </form>
+      </div>
+    );
   }
 
   return (
@@ -93,8 +111,8 @@ export default function PostList() {
         <PostItem
           key={p.id}
           post={p}
-          onEdit={setEditing}
-          onDelete={handleDelete}
+          onEdit={setEditing} // Opens the modal
+          onDelete={handleDelete} // Calls handler in App.jsx
         />
       ))}
 
@@ -102,64 +120,9 @@ export default function PostList() {
         <EditModal
           post={editing}
           onCancel={() => setEditing(null)}
-          onSave={handleSave}
+          onSave={handleSave} // Calls handler in App.jsx
         />
       )}
     </section>
-  );
-}
-
-function EditModal({ post, onCancel, onSave }) {
-  const [author, setAuthor] = useState(post.author);
-  const [content, setContent] = useState(post.content);
-  const [imageUrl, setImageUrl] = useState(post.imageUrl || "");
-  const [saving, setSaving] = useState(false);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setSaving(true);
-    await onSave({ ...post, author, content, imageUrl: imageUrl || null });
-    setSaving(false);
-  }
-
-  return (
-    <div className="modal-backdrop">
-      <form className="modal card" onSubmit={handleSubmit}>
-        <h3>Edit post</h3>
-
-        <label>
-          Author
-          <input
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Content
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Image URL
-          <input
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-          />
-        </label>
-
-        <div className="actions">
-          <button type="button" onClick={onCancel} disabled={saving}>
-            Cancel
-          </button>
-          <button type="submit" disabled={saving}>
-            {saving ? "Saving..." : "Save"}
-          </button>
-        </div>
-      </form>
-    </div>
   );
 }
