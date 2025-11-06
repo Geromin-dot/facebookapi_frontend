@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getPosts, deletePost } from "../api";
+import { getPosts, deletePost, updatePost } from "../api";
 
 function PostItem({ post, onEdit, onDelete }) {
   return (
@@ -72,6 +72,16 @@ export default function PostList() {
     }
   }
 
+  async function handleSave(updated) {
+    try {
+      await updatePost(updated.id, updated);
+      await load();
+      setEditing(null);
+    } catch (err) {
+      alert("Update failed: " + err.message);
+    }
+  }
+
   return (
     <section className="post-list">
       <h2>Recent posts</h2>
@@ -80,18 +90,19 @@ export default function PostList() {
       {!loading && posts.length === 0 && <div>No posts yet!</div>}
 
       {posts.map((p) => (
-        <PostItem key={p.id} post={p} onEdit={setEditing} onDelete={handleDelete} />
+        <PostItem
+          key={p.id}
+          post={p}
+          onEdit={setEditing}
+          onDelete={handleDelete}
+        />
       ))}
 
       {editing && (
         <EditModal
           post={editing}
           onCancel={() => setEditing(null)}
-          onSave={async (updated) => {
-            // temporary: you can add an update API later
-            alert("Edit feature not yet implemented.");
-            setEditing(null);
-          }}
+          onSave={handleSave}
         />
       )}
     </section>
@@ -118,7 +129,10 @@ function EditModal({ post, onCancel, onSave }) {
 
         <label>
           Author
-          <input value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+          />
         </label>
 
         <label>
