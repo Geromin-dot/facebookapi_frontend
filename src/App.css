@@ -1,112 +1,121 @@
 /* General layout */
 body {
-  background-color: #f0f2f5;
-  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  margin: 0;
-  color: #1c1e21;
+  background-color: #f0f2f5;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  color: #1c1e21;
 }
 
 /* Header */
 .app-header {
-  background-color: #1877f2;
-  color: white;
-  padding: 16px 32px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #1877f2;
+  color: white;
+  padding: 16px 32px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Main container */
 .app-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  
+  /* The FIX: Center the entire content block and limit its width */
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 /* Post form */
 .post-form-wrapper {
-  background-color: white;
-  width: 100%;
-  max-width: 600px;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  margin-bottom: 20px;
+  background-color: white;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
 }
 
 .post-form-wrapper h2 {
-  margin-top: 0;
-  font-size: 1.2rem;
-  margin-bottom: 12px;
+  margin-top: 0;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
 }
 
 .post-form-wrapper input,
 .post-form-wrapper textarea {
-  width: 100%;
-  border: 1px solid #ccd0d5;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 12px;
-  font-size: 0.95rem;
+  width: 100%;
+  border: 1px solid #ccd0d5;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
 }
 
 .post-form-wrapper button {
-  background-color: #1877f2;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
+  background-color: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
 }
 
 .post-form-wrapper button:hover {
-  background-color: #166fe5;
+  background-color: #166fe5;
 }
 
 /* Posts section */
 .post-list {
-  width: 100%;
-  max-width: 600px;
+  width: 100%;
+  max-width: 600px;
 }
 
 .post-list h2 {
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-  margin-left: 5px;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  margin-left: 5px;
 }
 
 .post-card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .post-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .post-header h3 {
-  margin: 0;
-  font-size: 1rem;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .post-date {
-  display: block;
-  font-size: 0.8rem;
-  color: #606770;
-  margin-top: 2px;
+  display: block;
+  font-size: 0.8rem;
+  color: #606770;
+  margin-top: 2px;
 }
 
 .post-controls {
-  di
-splay: flex;
-  gap: 8px;   
+  display: flex;
+  gap: 8px;   
+}
+
+/* Optional header/title styling, assuming this targets the blue "Facebook-like Posts" block */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
 }
